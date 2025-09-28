@@ -2,8 +2,10 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router";
 
 const Login = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -17,11 +19,12 @@ const Login = () => {
         "http://localhost:5000/api/auth/login",
         data,
         {
-          withCredentials: true, // cookie পেলে backend এর জন্য দরকার হতে পারে
+          withCredentials: true,
         }
       );
 
       toast.success(res.data.message || "Login successful!");
+      navigate("/myapp");
       //   reset();
     } catch (err) {
       toast.error(err.response?.data?.message || "Login failed!");

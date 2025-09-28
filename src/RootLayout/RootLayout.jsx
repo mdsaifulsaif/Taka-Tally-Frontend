@@ -1,8 +1,36 @@
-import React from "react";
+import React, { use } from "react";
 import { FaTachometerAlt, FaEdit, FaUsers, FaCog, FaEye } from "react-icons/fa";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { MdOutlineAddCircle } from "react-icons/md";
+import { AuthContext } from "../Contexts/ContextProvider";
+import axios from "axios";
 
 function RootLayout() {
+  const { user } = use(AuthContext);
+
+  const fetchSummary = async () => {
+    const { data } = await axios.get(
+      "http://localhost:5000/api/transaction/summary",
+      {
+        withCredentials: true,
+      }
+    );
+    return data;
+  };
+  const {
+    data: summary,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["summary"], // unique key
+    queryFn: fetchSummary,
+  });
+
+  console.log(user);
+  console.log("data", summary);
+
   return (
     <div className="min-h-screen bg-yellow-100 flex p-5 justify-center">
       <div className="flex w-full max-w-6xl bg-white shadow-lg rounded-xl overflow-hidden">
@@ -51,16 +79,16 @@ function RootLayout() {
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div className="bg-yellow-200 p-4 rounded-lg text-center">
-              <p className="text-2xl font-bold">83%</p>
-              <p className="text-sm">Open Rate</p>
+              <p className="text-2xl font-bold">{summary.totalExpense}</p>
+              <p className="text-sm">Total Expense</p>
             </div>
             <div className="bg-blue-200 p-4 rounded-lg text-center">
-              <p className="text-2xl font-bold">77%</p>
-              <p className="text-sm">Complete</p>
+              <p className="text-2xl font-bold">{summary.totalIncome}</p>
+              <p className="text-sm">Total Income</p>
             </div>
             <div className="bg-pink-200 p-4 rounded-lg text-center">
-              <p className="text-2xl font-bold">91</p>
-              <p className="text-sm">Unique Views</p>
+              <p className="text-2xl font-bold">{summary.balance}</p>
+              <p className="text-sm">Balance</p>
             </div>
             <div className="bg-purple-200 p-4 rounded-lg text-center">
               <p className="text-2xl font-bold">126</p>
