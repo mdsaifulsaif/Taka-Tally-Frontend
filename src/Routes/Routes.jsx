@@ -4,6 +4,8 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import Home from "../Pages/Home/Home";
 import ProtectedRoute from "../ProtectedRoutes/ProtectedRoute";
+import TransactionForm from "../Pages/TransactionForm/TransactionForm";
+
 // import { RouterProvider } from "react-router";
 
 export const router = createBrowserRouter([
@@ -26,6 +28,14 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
+      },
+      {
+        path: "/myapp/addnew",
+        element: (
+          <ProtectedRoute>
+            <TransactionForm />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
