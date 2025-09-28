@@ -12,7 +12,7 @@ function Home() {
   console.log(user);
   const fetchSummary = async () => {
     const { data } = await axios.get(
-      "http://localhost:5000/api/transaction/summary",
+      "https://taka-tally-server.onrender.com/api/transaction/summary",
       {
         withCredentials: true,
       }

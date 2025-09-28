@@ -17,7 +17,7 @@ function TransactionForm() {
   const mutation = useMutation({
     mutationFn: async (newTransaction) => {
       const { data } = await axios.post(
-        "http://localhost:5000/api/transaction/create",
+        "https://taka-tally-server.onrender.com/api/transaction/create",
         newTransaction,
         { withCredentials: true }
       );

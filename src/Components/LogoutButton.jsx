@@ -12,9 +12,12 @@ function LogoutButton() {
   const handleLogout = async () => {
     try {
       setLoading(true);
-      await axios.get("http://localhost:5000/api/auth/logout", {
-        withCredentials: true,
-      });
+      await axios.get(
+        "https://taka-tally-server.onrender.com/api/auth/logout",
+        {
+          withCredentials: true,
+        }
+      );
       toast.success("Logged out successfully");
 
       setUser(null);
@@ -29,7 +32,7 @@ function LogoutButton() {
   return (
     <button
       onClick={handleLogout}
-      className="flex w/full items-center gap-2 px-3 py-2 rounded text-red-600 transition font-semibold cursor-pointer"
+      className="flex w/full items-center gap-2 px-3 py-2 rounded text-red-400 transition font-semibold cursor-pointer"
       disabled={loading}
     >
       {loading ? "Logging out..." : "Logout"}

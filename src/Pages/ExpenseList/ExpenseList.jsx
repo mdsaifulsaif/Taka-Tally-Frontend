@@ -8,7 +8,7 @@ function ExpenseList() {
   // fetch expenses only
   const fetchExpenses = async () => {
     const { data } = await axios.get(
-      "http://localhost:5000/api/transaction/all-expeces",
+      "https://taka-tally-server.onrender.com/api/transaction/all-expeces",
       { withCredentials: true }
     );
     return data.expenses || [];

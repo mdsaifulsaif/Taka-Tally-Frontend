@@ -18,7 +18,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://taka-tally-server.onrender.com/api/auth/login",
         data,
         {
           withCredentials: true,
@@ -37,7 +37,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex px-5 items-center justify-center bg-gray-100">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md space-y-4"

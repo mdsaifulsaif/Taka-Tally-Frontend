@@ -19,7 +19,7 @@ const Register = () => {
   const onSubmit = async (data) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "https://taka-tally-server.onrender.com/api/auth/register",
         data,
         { withCredentials: true }
       );
@@ -45,7 +45,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen px-5 flex items-center justify-center bg-gray-100">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md space-y-4"

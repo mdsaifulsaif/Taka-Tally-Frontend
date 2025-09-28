@@ -2,9 +2,6 @@ import React from "react";
 import {
   FaTachometerAlt,
   FaEdit,
-  FaUsers,
-  FaCog,
-  FaEye,
   FaHome,
   FaFileInvoiceDollar,
 } from "react-icons/fa";
@@ -17,7 +14,6 @@ import NavberMobile from "../Components/NavberMobile";
 function RootLayout() {
   const { user } = React.useContext(AuthContext);
   const location = useLocation();
-  console.log("curent userrrrr", user);
 
   const navItems = [
     { name: "Home", icon: <FaHome />, to: "/myapp" },
@@ -32,9 +28,16 @@ function RootLayout() {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row justify-center p-0 md:p-5 bg-gray-100">
+      {/* Mobile logout button */}
+      {user && (
+        <div className="fixed top-6  right-4 md:hidden z-50">
+          <LogoutButton />
+        </div>
+      )}
+
       <div className="flex w-full max-w-6xl bg-white shadow-lg rounded-xl overflow-hidden">
-        {/* Sidebar for md+ */}
-        <aside className="hidden md:flex flex-col  relative w-60 bg-gray-800 text-white p-4 space-y-6 overflow-y-auto">
+        {/* Sidebar for desktop */}
+        <aside className="hidden md:flex flex-col relative w-60 bg-gray-800 text-white p-4 space-y-6 overflow-y-auto">
           <Link to="/myapp">
             <h1 className="text-2xl font-bold">Taka Tally</h1>
           </Link>
@@ -61,17 +64,19 @@ function RootLayout() {
             ))}
           </nav>
 
+          {/* Desktop logout */}
           <div className="absolute left-5 bottom-5">
             <LogoutButton />
           </div>
         </aside>
 
-        {/* Main Content */}
+        {/* Main content */}
         <main className="flex-1 overflow-y-auto bg-gray-50 p-6 min-h-[calc(100vh-60px)]">
           <Outlet />
         </main>
       </div>
 
+      {/* Mobile navigation */}
       <NavberMobile />
     </div>
   );

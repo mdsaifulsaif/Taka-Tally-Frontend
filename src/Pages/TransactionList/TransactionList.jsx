@@ -7,7 +7,7 @@
 // function TransactionList() {
 //   const fetchTransactions = async () => {
 //     const { data } = await axios.get(
-//       "http://localhost:5000/api/transaction/all-transaction",
+//       "https://taka-tally-server.onrender.com/api/transaction/all-transaction",
 //       { withCredentials: true }
 //     );
 //     return data.statements;
@@ -87,7 +87,7 @@ import LoadingPage from "./../../Components/LoadingPage";
 function TransactionList() {
   const fetchTransactions = async () => {
     const { data } = await axios.get(
-      "http://localhost:5000/api/transaction/all-transaction",
+      "https://taka-tally-server.onrender.com/api/transaction/all-transaction",
       { withCredentials: true }
     );
     return data.statements;
