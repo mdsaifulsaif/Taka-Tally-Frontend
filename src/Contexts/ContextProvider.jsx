@@ -26,7 +26,6 @@ function ContextProvider({ children }) {
       } catch (err) {
         console.error("AuthContext fetch error:", err);
         setUser(null);
-        setPartner(null);
       } finally {
         setLoading(false);
       }

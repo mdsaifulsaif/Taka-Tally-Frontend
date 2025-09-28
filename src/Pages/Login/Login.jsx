@@ -1,16 +1,18 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
+import { useContext } from "react";
+import { AuthContext } from "../../Contexts/ContextProvider";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setUser, user } = useContext(AuthContext);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -23,9 +25,12 @@ const Login = () => {
         }
       );
 
-      toast.success(res.data.message || "Login successful!");
-      navigate("/myapp");
-      //   reset();
+      if (res.data.user) {
+        toast.success(res.data.message || "Login successful!");
+        setUser(res.data.user);
+        console.log("Updated user:", res.data.user);
+        navigate("/myapp");
+      }
     } catch (err) {
       toast.error(err.response?.data?.message || "Login failed!");
     }
@@ -37,45 +42,50 @@ const Login = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md space-y-4"
       >
-        <h2 className="text-2xl font-bold text-blue-600 text-center">Login</h2>
+        <h2 className="text-2xl font-bold text-purple-400 text-center">
+          Login
+        </h2>
 
-        {/* Email */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Email
-          </label>
+          <label>Email</label>
           <input
             type="email"
-            {...register("email", { required: "Email is required" })}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your email"
+            {...register("email", { required: "Email required" })}
+            className="w-full border px-3 py-2 rounded"
           />
           {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email.message}</p>
+            <p className="text-red-500">{errors.email.message}</p>
           )}
         </div>
 
-        {/* Password */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Password
-          </label>
+          <label>Password</label>
           <input
             type="password"
-            {...register("password", { required: "Password is required" })}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your password"
+            {...register("password", { required: "Password required" })}
+            className="w-full border px-3 py-2 rounded"
           />
           {errors.password && (
-            <p className="text-red-500 text-sm">{errors.password.message}</p>
+            <p className="text-red-500">{errors.password.message}</p>
           )}
         </div>
 
-        {/* Submit */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-xl hover:bg-blue-700 transition"
+          className="w-full bg-purple-400 text-white py-2 rounded hover:bg-purple-500 transition"
         >
           Login
         </button>
+
+        {/* Extra text for Register */}
+        <p className="text-center text-sm text-gray-600">
+          Don’t have an account?{" "}
+          <Link to="/register" className="text-purple-500 hover:underline">
+            Register
+          </Link>
+        </p>
       </form>
     </div>
   );

@@ -1,25 +1,44 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router";
+import { useContext } from "react";
+import { AuthContext } from "../../Contexts/ContextProvider";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const { setUser } = useContext(AuthContext);
+
   const {
-    register,
+    register: formRegister,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       const res = await axios.post(
         "http://localhost:5000/api/auth/register",
         data,
         { withCredentials: true }
       );
-      toast.success(res.data.message || "Registration successful!");
-      //   reset(); // form clear
+
+      const newUser = res.data.user || res.data.newUser;
+      if (newUser) {
+        const safeUser = {
+          _id: newUser._id,
+          name: newUser.name,
+          email: newUser.email,
+        };
+
+        setUser(safeUser);
+        toast.success(res.data.message || "Registration successful!");
+        console.log("Updated user:", safeUser);
+        navigate("/myapp");
+      }
+
+      reset();
     } catch (err) {
       toast.error(err.response?.data?.message || "Registration failed!");
     }
@@ -31,7 +50,7 @@ const Register = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md space-y-4"
       >
-        <h2 className="text-2xl font-bold text-blue-600 text-center">
+        <h2 className="text-2xl font-bold text-purple-400 text-center">
           Register
         </h2>
 
@@ -42,8 +61,9 @@ const Register = () => {
           </label>
           <input
             type="text"
-            {...register("name", { required: "Name is required" })}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your name"
+            {...formRegister("name", { required: "Name is required" })}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
           {errors.name && (
             <p className="text-red-500 text-sm">{errors.name.message}</p>
@@ -57,8 +77,9 @@ const Register = () => {
           </label>
           <input
             type="email"
-            {...register("email", { required: "Email is required" })}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your email"
+            {...formRegister("email", { required: "Email is required" })}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
           {errors.email && (
             <p className="text-red-500 text-sm">{errors.email.message}</p>
@@ -72,11 +93,12 @@ const Register = () => {
           </label>
           <input
             type="password"
-            {...register("password", {
+            placeholder="Enter your password"
+            {...formRegister("password", {
               required: "Password is required",
               minLength: 6,
             })}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
           {errors.password && (
             <p className="text-red-500 text-sm">
@@ -90,10 +112,18 @@ const Register = () => {
         {/* Submit */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-xl hover:bg-blue-700 transition"
+          className="w-full bg-purple-400 text-white py-2 px-4 rounded-xl hover:bg-purple-500 transition"
         >
           Register
         </button>
+
+        {/* Already have an account */}
+        <p className="text-center text-sm text-gray-600">
+          Already have an account?{" "}
+          <Link to="/" className="text-purple-500 hover:underline">
+            Login
+          </Link>
+        </p>
       </form>
     </div>
   );

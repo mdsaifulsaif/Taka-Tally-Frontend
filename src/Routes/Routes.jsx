@@ -5,8 +5,9 @@ import Register from "../Pages/Register/Register";
 import Home from "../Pages/Home/Home";
 import ProtectedRoute from "../ProtectedRoutes/ProtectedRoute";
 import TransactionForm from "../Pages/TransactionForm/TransactionForm";
-
-// import { RouterProvider } from "react-router";
+import TransactionList from "./../Pages/TransactionList/TransactionList";
+import ExpenseList from "../Pages/ExpenseList/ExpenseList";
+import IncomeList from "../Pages/IncomList/IncomeList";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,30 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <TransactionForm />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/myapp/statements",
+        element: (
+          <ProtectedRoute>
+            <TransactionList />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/myapp/expenses",
+        element: (
+          <ProtectedRoute>
+            <ExpenseList />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/myapp/incomes",
+        element: (
+          <ProtectedRoute>
+            <IncomeList />
           </ProtectedRoute>
         ),
       },

@@ -18,7 +18,7 @@ function SummaryChart({ summary }) {
   ];
 
   return (
-    <div className="w-full h-50">
+    <div className="w-full h-60">
       <ResponsiveContainer>
         <BarChart
           data={data}
