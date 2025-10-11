@@ -24,6 +24,12 @@ function RootLayout() {
     },
     { name: "Expenses", icon: <FaEdit />, to: "/myapp/expenses" },
     { name: "Income", icon: <FaTachometerAlt />, to: "/myapp/incomes" },
+    {
+      name: "Receivables",
+      icon: <FaTachometerAlt />,
+      to: "/myapp/receivables",
+    },
+    { name: "Payables", icon: <FaTachometerAlt />, to: "/myapp/payables" },
   ];
 
   return (

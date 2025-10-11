@@ -9,6 +9,8 @@ import TransactionList from "./../Pages/TransactionList/TransactionList";
 import ExpenseList from "../Pages/ExpenseList/ExpenseList";
 import IncomeList from "../Pages/IncomList/IncomeList";
 import UpdateTransaction from "../Pages/UpdateTransaction/UpdateTransaction";
+// import Receivable from "../Pages/Receivable/Receivable";
+import ReceivableList from "../Pages/Receivable/ReceivableList";
 
 export const router = createBrowserRouter([
   {
@@ -60,6 +62,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <IncomeList />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/myapp/receivables",
+        element: (
+          <ProtectedRoute>
+            <ReceivableList />
           </ProtectedRoute>
         ),
       },
