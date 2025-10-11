@@ -8,7 +8,7 @@ function IncomeList() {
   // fetch expenses only
   const fetchExpenses = async () => {
     const { data } = await axios.get(
-      "https://taka-tally-server.onrender.com/api/transaction/all-incomes",
+      "http://localhost:5000/api/transaction/all-incomes",
       { withCredentials: true }
     );
     return data.incomes || [];

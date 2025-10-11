@@ -7,7 +7,7 @@ import { AuthContext } from "../../Contexts/ContextProvider";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setUser, user } = useContext(AuthContext);
+  const { setUser } = useContext(AuthContext);
 
   const {
     register,
@@ -18,7 +18,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const res = await axios.post(
-        "https://taka-tally-server.onrender.com/api/auth/login",
+        "http://localhost:5000/api/auth/login",
         data,
         {
           withCredentials: true,
@@ -26,60 +26,85 @@ const Login = () => {
       );
 
       if (res.data.user) {
-        toast.success(res.data.message || "Login successful!");
+        toast.success(res.data.message || " Login successful!");
         setUser(res.data.user);
-        console.log("Updated user:", res.data.user);
         navigate("/myapp");
       }
     } catch (err) {
-      toast.error(err.response?.data?.message || "Login failed!");
+      // 🔥 এখানে toastify তে exact backend error দেখাবে
+      const message =
+        err.response?.data?.message || " Invalid phone number or password!";
+      toast.error(message);
     }
   };
 
   return (
-    <div className="min-h-screen flex px-5 items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-5">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md space-y-4"
+        className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md space-y-5"
       >
-        <h2 className="text-2xl font-bold text-purple-400 text-center">
+        <h2 className="text-2xl font-bold text-center text-purple-500">
           Login
         </h2>
 
+        {/* Phone Number */}
         <div>
-          <label>Email</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Phone Number
+          </label>
           <input
-            type="email"
-            placeholder="Enter your email"
-            {...register("email", { required: "Email required" })}
-            className="w-full border px-3 py-2 rounded"
+            type="number"
+            placeholder="Enter 11 digit phone number"
+            {...register("phoneNumber", {
+              required: "Phone number required",
+              pattern: {
+                value: /^\d{11}$/,
+                message: "Phone number must be 11 digits",
+              },
+            })}
+            className="w-full border px-3 py-2 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-purple-400"
           />
-          {errors.email && (
-            <p className="text-red-500">{errors.email.message}</p>
+          {errors.phoneNumber && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.phoneNumber.message}
+            </p>
           )}
         </div>
 
+        {/* Password */}
         <div>
-          <label>Password</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Password
+          </label>
           <input
             type="password"
             placeholder="Enter your password"
-            {...register("password", { required: "Password required" })}
-            className="w-full border px-3 py-2 rounded"
+            {...register("password", {
+              required: "Password required",
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters",
+              },
+            })}
+            className="w-full border px-3 py-2 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-purple-400"
           />
           {errors.password && (
-            <p className="text-red-500">{errors.password.message}</p>
+            <p className="text-red-500 text-sm mt-1">
+              {errors.password.message}
+            </p>
           )}
         </div>
 
+        {/* Submit */}
         <button
           type="submit"
-          className="w-full bg-purple-400 text-white py-2 rounded hover:bg-purple-500 transition"
+          className="w-full bg-purple-500 text-white py-2 rounded hover:bg-purple-600 transition"
         >
           Login
         </button>
 
-        {/* Extra text for Register */}
+        {/* Register Link */}
         <p className="text-center text-sm text-gray-600">
           Don’t have an account?{" "}
           <Link to="/register" className="text-purple-500 hover:underline">

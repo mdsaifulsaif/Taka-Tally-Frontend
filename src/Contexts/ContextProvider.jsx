@@ -10,7 +10,7 @@ function ContextProvider({ children }) {
     const fetchAuthData = async () => {
       try {
         const resUser = await fetch(
-          "https://taka-tally-server.onrender.com/api/auth/current-user",
+          "http://localhost:5000/api/auth/current-user",
           {
             method: "GET",
             credentials: "include",

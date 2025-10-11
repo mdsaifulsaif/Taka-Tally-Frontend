@@ -8,6 +8,7 @@ import TransactionForm from "../Pages/TransactionForm/TransactionForm";
 import TransactionList from "./../Pages/TransactionList/TransactionList";
 import ExpenseList from "../Pages/ExpenseList/ExpenseList";
 import IncomeList from "../Pages/IncomList/IncomeList";
+import UpdateTransaction from "../Pages/UpdateTransaction/UpdateTransaction";
 
 export const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ export const router = createBrowserRouter([
             <IncomeList />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "/myapp/statements/:id",
+        element: <UpdateTransaction />,
       },
     ],
   },

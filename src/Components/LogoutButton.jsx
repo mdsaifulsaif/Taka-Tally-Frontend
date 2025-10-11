@@ -12,12 +12,9 @@ function LogoutButton() {
   const handleLogout = async () => {
     try {
       setLoading(true);
-      await axios.get(
-        "https://taka-tally-server.onrender.com/api/auth/logout",
-        {
-          withCredentials: true,
-        }
-      );
+      await axios.get("http://localhost:5000/api/auth/logout", {
+        withCredentials: true,
+      });
       toast.success("Logged out successfully");
 
       setUser(null);

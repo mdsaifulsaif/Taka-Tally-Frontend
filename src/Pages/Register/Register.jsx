@@ -19,7 +19,7 @@ const Register = () => {
   const onSubmit = async (data) => {
     try {
       const res = await axios.post(
-        "https://taka-tally-server.onrender.com/api/auth/register",
+        "http://localhost:5000/api/auth/register",
         data,
         { withCredentials: true }
       );
@@ -28,6 +28,7 @@ const Register = () => {
       if (newUser) {
         const safeUser = {
           _id: newUser._id,
+          phoneNumber: newUser.phoneNumber,
           name: newUser.name,
           email: newUser.email,
         };
@@ -70,6 +71,23 @@ const Register = () => {
           )}
         </div>
 
+        {/* Email */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Phone Number
+          </label>
+          <input
+            type="number"
+            placeholder="Enter your email"
+            {...formRegister("phoneNumber", {
+              required: "Phone Number is required",
+            })}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+          {errors.phoneNumber && (
+            <p className="text-red-500 text-sm">{errors.phoneNumber.message}</p>
+          )}
+        </div>
         {/* Email */}
         <div>
           <label className="block text-sm font-medium text-gray-700">
